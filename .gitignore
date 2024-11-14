@@ -1,0 +1,114 @@
+# Ignore build output
+bin/
+obj/
+
+# Ignore NuGet packages
+*.nupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Ignore build results of specific environments
+*.dll
+*.exe
+*.app
+*.so
+*.dylib
+*.pdb
+*.cache
+
+# User-specific files
+.vscode/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Rider specific
+.idea/
+.idea_modules/
+
+# Visual Studio Code
+.vscode/
+
+# Auto-generated files
+*.dbmdl
+*.jfm
+.DS_Store
+Thumbs.db
+
+# Ignore logs, database, and generated files
+*.log
+*.sql
+*.sqlite
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# IIS files
+iisExpress/
+.config/
+
+# Azure
+.azure/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# macOS files
+.DS_Store
+
+# Linux files
+*.pid
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+*.coverage.info
+
+# NCrunch
+.ncrunchsolution
+*.ncrunchproject
+.ncrunchsolution
+
+# Personal workspace
+*.swp
+*.*~
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# JetBrains Rider
+.idea/
+
+# Local history for JetBrains IDEs
+.localhistory/
+
+# User preferences for JetBrains IDEs
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Backup & temporary files
+*_temp/
+*.bak
+
+# WebAssembly
+wwwroot/*.min.css
+wwwroot/*.min.js
+wwwroot/css/
+wwwroot/js/
+
+# Publish output
+.publish/
