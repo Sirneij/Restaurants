@@ -15,7 +15,7 @@ public class RestaurantDto
     public string? City { get; set; }
     public string? ZipCode { get; set; }
     public string? Country { get; set; }
-    public List<DishDto> Dishes { get; set; } = new();
+    public List<DishDto> Dishes { get; set; } = [];
 
     public static RestaurantDto FromRestaurant(Restaurant restaurant)
     {

@@ -7,5 +7,6 @@ namespace Restaurants.Application.Restaurants
     {
         Task<IEnumerable<RestaurantDto>> GetRestaurants();
         Task<RestaurantDto?> GetRestaurant(Guid id);
+        Task<Guid> CreateRestaurant(Restaurant restaurant);
     }
 }

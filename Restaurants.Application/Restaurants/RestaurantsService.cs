@@ -21,4 +21,12 @@ internal class RestaurantsService(IRestaurantRepository restaurantRepository, IL
         return restaurant is not null ? RestaurantDto.FromRestaurant(restaurant) : null;
     }
 
+    public async Task<Guid> CreateRestaurant(Restaurant restaurant)
+    {
+        logger.LogInformation("Creating restaurant: {Name}", restaurant.Name);
+        Guid Id = await restaurantRepository.CreateAsync(restaurant);
+        logger.LogInformation("Restaurant created with ID: {Id}", Id);
+        return Id;
+    }
+
 }
