@@ -5,6 +5,7 @@ using Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurants.Application.Restaurants.Queries.GetRestaurant;
 using Restaurants.Application.Restaurants.Queries.GetRestaurants;
 using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
+using Restaurants.Application.Restaurants.Dtos;
 
 namespace Restaurants.API.Controllers;
 
@@ -13,14 +14,14 @@ namespace Restaurants.API.Controllers;
 public class RestaurantsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAllRestaurants()
+    public async Task<ActionResult<IEnumerable<RestaurantDto?>>> GetAllRestaurants()
     {
         var restaurants = await mediator.Send(new GetRestaurantsQuery());
         return Ok(restaurants);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetRestaurant([FromRoute] Guid id)
+    public async Task<ActionResult<RestaurantDto?>> GetRestaurant([FromRoute] Guid id)
     {
         var restaurant = await mediator.Send(new GetRestaurantQuery(id));
         if (restaurant is null)
@@ -30,6 +31,8 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteRestaurant([FromRoute] Guid id)
     {
         var isDeleted = await mediator.Send(new DeleteRestaurantCommand(id));
@@ -40,6 +43,8 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateRestaurant([FromRoute] Guid id, [FromBody] UpdateRestaurantCommand command)
     {
         command.Id = id;
@@ -50,13 +55,11 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-
-
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantCommand command)
     {
         Guid id = await mediator.Send(command);
-
         return CreatedAtAction(nameof(GetRestaurant), new { id }, null);
     }
 }

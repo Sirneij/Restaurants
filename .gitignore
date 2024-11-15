@@ -1,6 +1,7 @@
 # Ignore build output
 bin/
 obj/
+Logs/
 
 # Ignore NuGet packages
 *.nupkg
