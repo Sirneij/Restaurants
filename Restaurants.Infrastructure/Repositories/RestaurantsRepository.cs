@@ -46,4 +46,19 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
         }
     }
 
+    public async Task<bool> UpdateAsync(Restaurant restaurant)
+    {
+        dbContext.Restaurants.Update(restaurant);
+
+        try
+        {
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return false;
+        }
+    }
+
 }
