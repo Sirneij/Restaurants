@@ -14,19 +14,16 @@ namespace Restaurants.API.Controllers;
 public class RestaurantsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<RestaurantDto?>>> GetAllRestaurants()
+    public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAllRestaurants()
     {
         var restaurants = await mediator.Send(new GetRestaurantsQuery());
         return Ok(restaurants);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<RestaurantDto?>> GetRestaurant([FromRoute] Guid id)
+    public async Task<ActionResult<RestaurantDto>> GetRestaurant([FromRoute] Guid id)
     {
         var restaurant = await mediator.Send(new GetRestaurantQuery(id));
-        if (restaurant is null)
-            return NotFound();
-
         return Ok(restaurant);
     }
 
