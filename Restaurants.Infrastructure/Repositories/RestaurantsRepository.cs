@@ -29,4 +29,21 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
         return restaurant.Id;
     }
 
+    public async Task<bool> DeleteAsync(Guid id)
+    {
+        var restaurant = new Restaurant { Id = id };
+        dbContext.Restaurants.Attach(restaurant);
+        dbContext.Restaurants.Remove(restaurant);
+
+        try
+        {
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return false;
+        }
+    }
+
 }
