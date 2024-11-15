@@ -53,6 +53,6 @@ public class DishesController(IMediator mediator) : ControllerBase
     {
         command.RestaurantId = restaurantId;
         Guid id = await mediator.Send(command);
-        return CreatedAtAction(nameof(GetDish), new { restaurantId, id }, null);
+        return CreatedAtAction(nameof(GetDish), new { id }, null);
     }
 }
