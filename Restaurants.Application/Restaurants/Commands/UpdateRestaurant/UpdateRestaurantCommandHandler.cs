@@ -6,16 +6,13 @@ namespace Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 public class UpdateRestaurantCommandHandler(
     IRestaurantRepository restaurantRepository,
     ILogger<UpdateRestaurantCommandHandler> logger
-) : IRequestHandler<UpdateRestaurantCommand, bool>
+) : IRequestHandler<UpdateRestaurantCommand>
 {
-    public async Task<bool> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
     {
         logger.LogInformation("Updating restaurant: {@request}", request);
 
-        bool isUpdated = await restaurantRepository.UpdateAsync(request);
-        if (!isUpdated)
-            logger.LogWarning("Restaurant with id {Id} not found", request.Id);
+        await restaurantRepository.UpdateAsync(request);
 
-        return isUpdated;
     }
 }

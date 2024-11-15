@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Entities;
+using Restaurants.Domain.Exceptions;
 using Restaurants.Domain.Repositories;
 using Restaurants.Infrastructure.Persistence;
 
@@ -14,12 +15,12 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
             .ToListAsync();
     }
 
-    public async Task<Restaurant?> GetByIdAsync(Guid id)
+    public async Task<Restaurant> GetByIdAsync(Guid id)
     {
         return await dbContext.Restaurants
             .Include(r => r.Dishes) // Load related dishes for the specified restaurant
             .AsSplitQuery() // Use split queries to load related entities
-            .FirstOrDefaultAsync(r => r.Id == id); // Retrieve the restaurant by its ID
+            .FirstOrDefaultAsync(r => r.Id == id) ?? throw new NotFoundException(nameof(Restaurant), id.ToString());
     }
 
     public async Task<Guid> CreateAsync(Restaurant restaurant)
@@ -29,7 +30,7 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
         return restaurant.Id;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
         var restaurant = new Restaurant { Id = id };
         dbContext.Restaurants.Attach(restaurant);
@@ -38,27 +39,27 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
         try
         {
             await dbContext.SaveChangesAsync();
-            return true;
         }
         catch (DbUpdateConcurrencyException)
         {
-            return false;
+            throw new NotFoundException(nameof(Restaurant), id.ToString());
         }
+
     }
 
-    public async Task<bool> UpdateAsync(Restaurant restaurant)
+    public async Task UpdateAsync(Restaurant restaurant)
     {
         dbContext.Restaurants.Update(restaurant);
 
         try
         {
             await dbContext.SaveChangesAsync();
-            return true;
         }
         catch (DbUpdateConcurrencyException)
         {
-            return false;
+            throw new NotFoundException(nameof(Restaurant), restaurant.Id.ToString());
         }
+
     }
 
 }
