@@ -1,11 +1,10 @@
 using FluentValidation;
-using Restaurants.Domain.Entities;
 
-namespace Restaurants.Application.Restaurants.Validators;
+namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 
-public class CreateRestaurantValidator : AbstractValidator<Restaurant>
+public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
 {
-    public CreateRestaurantValidator()
+    public CreateRestaurantCommandValidator()
     {
         RuleFor(r => r.Name)
             .NotEmpty()

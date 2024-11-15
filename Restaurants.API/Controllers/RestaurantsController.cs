@@ -1,24 +1,26 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Restaurants.Application.Restaurants;
-using Restaurants.Domain.Entities;
+using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
+using Restaurants.Application.Restaurants.Queries.GetRestaurant;
+using Restaurants.Application.Restaurants.Queries.GetRestaurants;
 
 namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class RestaurantsController(IRestaurantsService restaurantsService) : ControllerBase
+public class RestaurantsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAllRestaurants()
     {
-        var restaurants = await restaurantsService.GetRestaurants();
+        var restaurants = await mediator.Send(new GetRestaurantsQuery());
         return Ok(restaurants);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetRestaurant([FromRoute] Guid id)
     {
-        var restaurant = await restaurantsService.GetRestaurant(id);
+        var restaurant = await mediator.Send(new GetRestaurantQuery(id));
         if (restaurant is null)
             return NotFound();
 
@@ -26,9 +28,9 @@ public class RestaurantsController(IRestaurantsService restaurantsService) : Con
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateRestaurant([FromBody] Restaurant restaurant)
+    public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantCommand command)
     {
-        Guid id = await restaurantsService.CreateRestaurant(restaurant);
+        Guid id = await mediator.Send(command);
 
         return CreatedAtAction(nameof(GetRestaurant), new { id }, null);
     }

@@ -11,10 +11,7 @@ public class RestaurantDto
     public string Category { get; set; } = default!;
     public bool HasDelivery { get; set; }
 
-    public string? Street { get; set; }
-    public string? City { get; set; }
-    public string? ZipCode { get; set; }
-    public string? Country { get; set; }
+    public Address? Address { get; set; }
     public List<DishDto> Dishes { get; set; } = [];
 
     public static RestaurantDto FromRestaurant(Restaurant restaurant)
@@ -26,10 +23,7 @@ public class RestaurantDto
             Description = restaurant.Description,
             Category = restaurant.Category,
             HasDelivery = restaurant.HasDelivery,
-            Street = restaurant.Address?.Street,
-            City = restaurant.Address?.City,
-            ZipCode = restaurant.Address?.ZipCode,
-            Country = restaurant.Address?.Country,
+            Address = restaurant.Address,
             Dishes = restaurant.Dishes.Select(DishDto.FromDish).ToList()
         };
     }
