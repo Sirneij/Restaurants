@@ -17,7 +17,7 @@ public class DeleteRestaurantCommandHandler(
         var deleted = await restaurantRepository.DeleteAsync(request.Id);
         if (!deleted)
         {
-            logger.LogWarning("Restaurant with id {Id} was not found", request.Id);
+            logger.LogWarning("Restaurant with id {Id} not found", request.Id);
         }
 
         return deleted;

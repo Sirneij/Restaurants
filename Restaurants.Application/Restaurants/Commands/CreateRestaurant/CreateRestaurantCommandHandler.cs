@@ -12,9 +12,8 @@ public class CreateRestaurantCommandHandler(
 
     public async Task<Guid> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Creating restaurant: {Name}", request.Name);
+        logger.LogInformation("Creating restaurant: {@request}", request);
         Guid Id = await restaurantRepository.CreateAsync(request);
-        logger.LogInformation("Restaurant created with ID: {Id}", Id);
         return Id;
     }
 }
