@@ -10,7 +10,7 @@ using Restaurants.Application.Dishes.Queries.GetDishes;
 namespace Restaurants.API.Controllers;
 
 [ApiController]
-[Route("api/restaurants/{restaurantId}/[controller]")]
+[Route("api/restaurants/{restaurantId}/dishes")]
 public class DishesController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

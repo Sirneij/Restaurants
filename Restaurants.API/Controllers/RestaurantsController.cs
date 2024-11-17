@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Restaurants.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/restaurants")]
 [Authorize]
 public class RestaurantsController(IMediator mediator) : ControllerBase
 {
